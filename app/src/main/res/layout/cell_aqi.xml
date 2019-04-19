@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/tv_site_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dimenCellAQIText"
+            android:textColor="@color/colorCellAQIText"
+            android:text="二林"/>
+
+        <TextView
+            android:id="@+id/tv_pollutant"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dimenCellAQIText"
+            android:textColor="@color/colorCellAQIText"
+            android:text="細懸浮微粒"/>
+
+        <TextView
+            android:id="@+id/tv_co"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dimenCellAQIText"
+            android:textColor="@color/colorCellAQIText"
+            android:text="0.5"/>
+
+        <TextView
+            android:id="@+id/tv_o3_8hr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dimenCellAQIText"
+            android:textColor="@color/colorCellAQIText"
+            android:text="0.5"/>
+
+        <TextView
+            android:id="@+id/tv_no2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dimenCellAQIText"
+            android:textColor="@color/colorCellAQIText"
+            android:text="0.5"/>
+
+        <TextView
+            android:id="@+id/tv_wind_speed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dimenCellAQIText"
+            android:textColor="@color/colorCellAQIText"
+            android:text="0.5"/>
+
+        <TextView
+            android:id="@+id/tv_pm25_avg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dimenCellAQIText"
+            android:textColor="@color/colorCellAQIText"
+            android:text="0.5"/>
+
+        <TextView
+            android:id="@+id/tv_longitude"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dimenCellAQIText"
+            android:textColor="@color/colorCellAQIText"
+            android:text="0.5"/>
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/tv_country"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dimenCellAQIText"
+            android:textColor="@color/colorCellAQIText"
+            android:text="彰化縣"/>
+
+        <TextView
+            android:id="@+id/tv_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dimenCellAQIText"
+            android:textColor="@color/colorCellAQIText"
+            android:text="普通"/>
+
+        <TextView
+            android:id="@+id/tv_co_8hr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dimenCellAQIText"
+            android:textColor="@color/colorCellAQIText"
+            android:text="0.5"/>
+
+        <TextView
+            android:id="@+id/tv_pm10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dimenCellAQIText"
+            android:textColor="@color/colorCellAQIText"
+            android:text="0.5"/>
+
+        <TextView
+            android:id="@+id/tv_nox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dimenCellAQIText"
+            android:textColor="@color/colorCellAQIText"
+            android:text="0.5"/>
+
+        <TextView
+            android:id="@+id/tv_wind_direc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dimenCellAQIText"
+            android:textColor="@color/colorCellAQIText"
+            android:text="0.5"/>
+
+        <TextView
+            android:id="@+id/tv_pm10_avg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dimenCellAQIText"
+            android:textColor="@color/colorCellAQIText"
+            android:text="0.5"/>
+
+        <TextView
+            android:id="@+id/tv_latitude"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dimenCellAQIText"
+            android:textColor="@color/colorCellAQIText"
+            android:text="0.5"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/tv_aqi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dimenCellAQIText"
+            android:textColor="@color/colorCellAQIText"
+            android:text="84"/>
+
+        <TextView
+            android:id="@+id/tv_so2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dimenCellAQIText"
+            android:textColor="@color/colorCellAQIText"
+            android:text="0.5"/>
+
+        <TextView
+            android:id="@+id/tv_o3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dimenCellAQIText"
+            android:textColor="@color/colorCellAQIText"
+            android:text="0.5"/>
+
+        <TextView
+            android:id="@+id/tv_pm25"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dimenCellAQIText"
+            android:textColor="@color/colorCellAQIText"
+            android:text="0.5"/>
+
+        <TextView
+            android:id="@+id/tv_no"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dimenCellAQIText"
+            android:textColor="@color/colorCellAQIText"
+            android:text="0.5"/>
+
+        <TextView
+            android:id="@+id/tv_publish_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dimenCellAQIText"
+            android:textColor="@color/colorCellAQIText"
+            android:text="0.5"/>
+
+        <TextView
+            android:id="@+id/tv_so2_avg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dimenCellAQIText"
+            android:textColor="@color/colorCellAQIText"
+            android:text="0.5"/>
+
+        <Button
+            android:id="@+id/btn_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="刪除"/>
+
+
+    </LinearLayout>
+
+</LinearLayout>
