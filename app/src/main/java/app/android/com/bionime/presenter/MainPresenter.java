@@ -32,6 +32,7 @@ public class MainPresenter {
             @Override
             public void onClick(View view) {
                 iMainModel.setAQIDelete(position,1);
+                iMainView.setAQIDatas();
             }
         });
     }
@@ -50,5 +51,6 @@ public class MainPresenter {
 
     public void setAllAQIRestore(){
         iMainModel.setAllAQIRestore();
+        iMainView.setAQIDatas();
     }
 }

@@ -1,8 +1,11 @@
 package app.android.com.bionime.model;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -27,8 +30,14 @@ public class MainModel implements IMainModel {
     private MainPresenter mainPresenter;
     private Context context;
     private boolean isLocalAQIDataNull = false;
+    private static MainModel mainModel;
+
+    public static MainModel getInstance(){
+        return mainModel;
+    }
 
     public MainModel(MainPresenter mainPresenter, Context context){
+
         this.mainPresenter = mainPresenter;
         this.context = context;
         networkClient = new NetworkClient();
@@ -36,6 +45,7 @@ public class MainModel implements IMainModel {
         getSentenceFromLocal();
         getAQIDataFromLocal();
         startTimer();
+        mainModel = this;
     }
 
     @Override
@@ -101,11 +111,11 @@ public class MainModel implements IMainModel {
     }
 
     private void getAQIDataFromInternet(String url, MainModel mainModel){
-        networkClient.getAQIData(url, mainModel);
+        networkClient.getAQIData(url,context);
     }
 
     private void getSentenceFromInternet(String url, MainModel mainModel) {
-        networkClient.getSentence(url, mainModel);
+        networkClient.getSentence(url, context);
     }
 
     private TimerTask task1 = new TimerTask() {
@@ -126,14 +136,15 @@ public class MainModel implements IMainModel {
     public void setAQIDelete(int position, int is_delete) {
         AQIDatas.remove(position);
         MySqlite.getInstance(context).updateIsDelete(AQIDatas.get(position).getId(),1);
-        mainPresenter.setAQIDataOnView();
-        Log.d(TAG, "setAQIDelete: ");
+        Log.d(TAG, "setAQIDelete: AQIDatas.size = " + AQIDatas.size());
     }
 
     @Override
     public void setAllAQIRestore() {
         MySqlite.getInstance(context).restoreIsDelete();
         AQIDatas = MySqlite.getInstance(context).getAllAQIDatasWithoutDelete();
-        mainPresenter.setAQIDataOnView();
+        Log.d(TAG, "setAllAQIRestore: AQIDatas.size = " + AQIDatas.size());
     }
+
+
 }

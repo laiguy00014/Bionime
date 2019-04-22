@@ -1,12 +1,16 @@
 package app.android.com.bionime.bean;
 
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
 
 /**
  * Created by laiguanyu on 2019/4/19.
  */
 
-public class DataBean {
+public class DataBean implements Serializable {
 
 
     /**

@@ -29,8 +29,8 @@ public class MainActivity extends AppCompatActivity implements IMainView{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        init();
         mainPresenter = new MainPresenter(this, this);
+        init();
         bindData();
     }
 
@@ -38,6 +38,12 @@ public class MainActivity extends AppCompatActivity implements IMainView{
         tv_sentence = findViewById(R.id.tv_sentence);
         recyclerView = findViewById(R.id.recyclerView);
         btn_restore = findViewById(R.id.btn_restore);
+        btn_restore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mainPresenter.setAllAQIRestore();
+            }
+        });
     }
 
     private void bindData(){
@@ -71,13 +77,6 @@ public class MainActivity extends AppCompatActivity implements IMainView{
         });
     }
 
-    @Override
-    public void setOnRestoreClick() {
-        btn_restore.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mainPresenter.setAllAQIRestore();
-            }
-        });
-    }
+
+
 }

@@ -1,5 +1,8 @@
 package app.android.com.bionime;
 
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -14,6 +17,7 @@ import org.jsoup.select.Elements;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
@@ -29,8 +33,9 @@ import app.android.com.bionime.model.MainModel;
 public class NetworkClient {
 
     private static final String TAG = "NetworkClient";
-
-    public void getAQIData(String url, MainModel mainModel){
+    private static final String BROADCAST_ACTION =
+            "app.android.com.bionime.broadcast";
+    public void getAQIData(String url, Context context){
         String decodedString = "";
         String urlData = "";
         try {
@@ -42,34 +47,40 @@ public class NetworkClient {
             }
             reader.close();
             Log.d(TAG, "getUrlData: urlData = " + urlData);
-            formateData(urlData, mainModel);
+            formateData(urlData, context);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private void formateData(String dataStr, MainModel mainModel){
+    private void formateData(String dataStr, Context context){
         try {
             JSONArray jsonArray = new JSONArray(dataStr);
-            List<DataBean> list = new ArrayList<>();
+            ArrayList<DataBean> list = new ArrayList<>();
             for (int i = 0 ; i < jsonArray.length() ; i++){
                 JSONObject jsonItem = jsonArray.getJSONObject(i);
                 DataBean bean = new Gson().fromJson(jsonItem.toString(),DataBean.class);
                 list.add(bean);
             }
-            mainModel.setAQIDatas(list);
+            Intent intent = new Intent(BROADCAST_ACTION);
+            intent.putExtra("type","aqi");
+            intent.putExtra("datas", list);
+            context.sendBroadcast(intent);
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
-    public void getSentence(String url, MainModel mainModel) {
+    public void getSentence(String url, Context context) {
         try {
             Document doc = Jsoup.connect(url).get();
             Elements elements = doc.select("meta[name=description]");
             String content = elements.get(0).attr("content");
             Log.d(TAG, "getWebData: content = " + content);
-            mainModel.setSentence(content);
+            Intent intent = new Intent(BROADCAST_ACTION);
+            intent.putExtra("type","sentence");
+            intent.putExtra("sentence", content);
+            context.sendBroadcast(intent);
         } catch (IOException e) {
             e.printStackTrace();
         }

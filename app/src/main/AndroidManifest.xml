@@ -18,6 +18,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <receiver android:name=".MainReceiver">
+            <intent-filter>
+                <action android:name=
+                    "app.android.com.bionime.broadcast" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
