@@ -1,56 +1,84 @@
 package app.android.com.bionime.presenter;
 
 import android.content.Context;
-import android.view.View;
+import android.content.Intent;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import app.android.com.bionime.bean.DataBean;
 import app.android.com.bionime.model.IMainModel;
 import app.android.com.bionime.model.MainModel;
-import app.android.com.bionime.view.IAQICellView;
 import app.android.com.bionime.view.IMainView;
 
 /**
  * Created by laiguanyu on 2019/4/19.
  */
 
-public class MainPresenter {
+public class MainPresenter implements IMainPresenter{
     private IMainModel iMainModel;
     private IMainView iMainView;
 
-
     public MainPresenter(IMainView iMainView, Context context) {
         this.iMainView = iMainView;
-        iMainModel = new MainModel(this, context);
-
+        iMainModel = new MainModel(context);
+        startTimer();
     }
 
-    public void onBindViewHolder(final int position, IAQICellView iaqiCellView){
-        iaqiCellView.setAllData(iMainModel.getAQIDataByPosition(position));
-        iaqiCellView.setOnDeleteClick(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                iMainModel.setAQIDelete(position,1);
-                iMainView.setAQIDatas();
-            }
-        });
-    }
-
-    public int getAQICount(){
-        return iMainModel.getAQIDataSize();
-    }
-
-    public void setSentenceOnView(){
-        iMainView.setSentence(iMainModel.getSentence());
-    }
-
-    public void setAQIDataOnView(){
-        iMainView.setAQIDatas();
-    }
-
-    public void setAllAQIRestore(){
+    @Override
+    public void setAllAQIRestore() {
         iMainModel.setAllAQIRestore();
-        iMainView.setAQIDatas();
+        iMainView.notifyRecyclerView(iMainModel.getLocalAQIDatas());
     }
+
+    @Override
+    public void setAQIDelete(int id) {
+        iMainModel.setAQIDelete(id,1);
+        iMainView.notifyRecyclerView(iMainModel.getLocalAQIDatas());
+    }
+
+    @Override
+    public void getLocalSentence() {
+        iMainView.setSentence(iMainModel.getLocalSentence());
+    }
+
+    @Override
+    public void getLocalAQIDatas() {
+        List<DataBean> datas = iMainModel.getLocalAQIDatas();
+        if (datas == null){
+            iMainView.setAQIDatas(new ArrayList<DataBean>());
+        }else {
+            iMainView.setAQIDatas(datas);
+        }
+
+    }
+
+    @Override
+    public void handleIntent(Intent intent) {
+        if (intent.getStringExtra("type").equals("aqi")){
+            iMainModel.setAQIDatas((ArrayList<DataBean>)intent.getSerializableExtra("datas"));
+            iMainView.setAQIDatas(iMainModel.getLocalAQIDatas());
+        }else if (intent.getStringExtra("type").equals("sentence")){
+            iMainModel.setSentence(intent.getStringExtra("sentence"));
+            iMainView.setSentence(iMainModel.getLocalSentence());
+        }
+    }
+
+    private void startTimer(){
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                iMainModel.getNetworkAQIData("http://opendata.epa.gov.tw/webapi/Data/REWIQA/?$orderby=SiteName&$skip=0&$top=1000&format=json");
+            }
+        },0,30 * 60 * 1000 / 60 / 3);
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                iMainModel.getNetworkSentence("https://tw.appledaily.com/index/dailyquote/");
+            }
+        },0, 12 * 60 * 60 * 1000 / 3600);
+    }
+
 }

@@ -100,23 +100,7 @@ public class MySqlite extends SQLiteOpenHelper {
 
     }
 
-    public List<DataBean> getAllAQIDatas()
-    {
-        List<DataBean> list = new ArrayList<>();
-        SQLiteDatabase db = this.getReadableDatabase();
-        cursor = db.query(DB_TABLE_MAIN, null, null, null, null, null, null);
-        cursor.moveToFirst();
-        if(cursor.getCount() == 0){
-            return null;
-        }
-        do{
-            list.add(formateDataBean(cursor));
-        }while (cursor.moveToNext());
-
-        return list;
-    }
-
-    public List<DataBean> getAllAQIDatasWithoutDelete()
+    public List<DataBean> getAllAQIDatasWithoutDelete(boolean isWithoutDelete)
     {
         List<DataBean> list = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
@@ -127,7 +111,11 @@ public class MySqlite extends SQLiteOpenHelper {
         }
         do{
             DataBean dataBean = formateDataBean(cursor);
-            if (dataBean.getIs_delete() == 0){
+            if (isWithoutDelete){
+                if (dataBean.getIs_delete() == 0){
+                    list.add(formateDataBean(cursor));
+                }
+            }else {
                 list.add(formateDataBean(cursor));
             }
         }while (cursor.moveToNext());
@@ -197,7 +185,7 @@ public class MySqlite extends SQLiteOpenHelper {
             cv.put(SO2_AVG, datas.get(i).getSO2_AVG());
             cv.put(LONGITUDE, datas.get(i).getLongitude());
             cv.put(LATITUDE, datas.get(i).getLatitude());
-            cv.put(IS_DELETE, 0);//預設false
+            cv.put(IS_DELETE, 0);//預設false 沒被刪除
             db.insert(DB_TABLE_MAIN, null, cv);
 
         }

@@ -18,12 +18,12 @@ public interface IMainModel {
 
     void setAllAQIRestore();
 
-    List<DataBean> getAllAQIData();
+    void getNetworkAQIData(String url);
 
-    DataBean getAQIDataByPosition(int position);
+    void getNetworkSentence(String url);
 
-    String getSentence();
+    String getLocalSentence();
 
-    int getAQIDataSize();
+    List<DataBean> getLocalAQIDatas();
 
 }

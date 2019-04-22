@@ -14,6 +14,7 @@ import app.android.com.bionime.LocalClient;
 import app.android.com.bionime.MySqlite;
 import app.android.com.bionime.NetworkClient;
 import app.android.com.bionime.bean.DataBean;
+import app.android.com.bionime.presenter.IMainPresenter;
 import app.android.com.bionime.presenter.MainPresenter;
 
 /**
@@ -23,127 +24,63 @@ import app.android.com.bionime.presenter.MainPresenter;
 public class MainModel implements IMainModel {
 
     private static final String TAG = "MainModel";
-    private List<DataBean> AQIDatas;
-    private String sentence;
     private NetworkClient networkClient;
     private LocalClient localClient;
-    private MainPresenter mainPresenter;
     private Context context;
     private boolean isLocalAQIDataNull = false;
-    private static MainModel mainModel;
 
-    public static MainModel getInstance(){
-        return mainModel;
-    }
-
-    public MainModel(MainPresenter mainPresenter, Context context){
-
-        this.mainPresenter = mainPresenter;
+    public MainModel(Context context){
         this.context = context;
         networkClient = new NetworkClient(context);
         localClient = new LocalClient(context);
-        getSentenceFromLocal();
-        getAQIDataFromLocal();
-        startTimer();
-        mainModel = this;
+        isLocalAQIDataNull = (localClient.getAQIDatas() == null);
     }
 
     @Override
-    public void setAQIDatas(List<DataBean> AQIDatas) {
-//        this.AQIDatas = AQIDatas;
+    public void setAQIDatas(List<DataBean> datas) {
         MySqlite mySqlite = MySqlite.getInstance(context);
         if (isLocalAQIDataNull){
-            mySqlite.insertAllAQIDatas(AQIDatas);
+            mySqlite.insertAllAQIDatas(datas);
             isLocalAQIDataNull = false;
         }else {
-            mySqlite.updateAllAQIDatas(AQIDatas);
+            mySqlite.updateAllAQIDatas(datas);
         }
-
-        this.AQIDatas = mySqlite.getAllAQIDatasWithoutDelete();
-        mainPresenter.setAQIDataOnView();
-
     }
 
     @Override
     public void setSentence(String sentence) {
-        this.sentence = sentence;
-        mainPresenter.setSentenceOnView();
         context.getSharedPreferences("sentence",Context.MODE_PRIVATE).edit().putString("sentence",sentence).commit();
     }
 
-    @Override
-    public List<DataBean> getAllAQIData() {
-        return AQIDatas;
-    }
 
     @Override
-    public String getSentence() {
-        return sentence;
+    public String getLocalSentence() {
+        return localClient.getSentence();
     }
 
     @Override
-    public DataBean getAQIDataByPosition(int position) {
-        return AQIDatas.get(position);
+    public List<DataBean> getLocalAQIDatas() {
+        return localClient.getAQIDatas();
     }
 
     @Override
-    public int getAQIDataSize() {
-        if (AQIDatas == null) return 0;
-        return AQIDatas.size();
-    }
-
-    private void startTimer(){
-        new Timer().schedule(task1,0,30 * 60 * 1000);
-        new Timer().schedule(task2,0, 12 * 60 * 60 * 1000);
-    }
-
-    private void getSentenceFromLocal(){
-        sentence = localClient.getSentence();
-    }
-
-    private void getAQIDataFromLocal(){
-        AQIDatas = localClient.getAQIDatas();
-        if (AQIDatas == null){
-            isLocalAQIDataNull = true;
-        }else{
-            isLocalAQIDataNull = false;
-        }
-    }
-
-    private void getAQIDataFromInternet(String url, MainModel mainModel){
+    public void getNetworkAQIData(String url){
         networkClient.getAQIData(url);
     }
 
-    private void getSentenceFromInternet(String url, MainModel mainModel) {
+    @Override
+    public void getNetworkSentence(String url) {
         networkClient.getSentence(url);
     }
 
-    private TimerTask task1 = new TimerTask() {
-        @Override
-        public void run() {
-            getAQIDataFromInternet("http://opendata.epa.gov.tw/webapi/Data/REWIQA/?$orderby=SiteName&$skip=0&$top=1000&format=json", MainModel.this);
-        }
-    };
-
-    private TimerTask task2 = new TimerTask() {
-        @Override
-        public void run() {
-            getSentenceFromInternet("https://tw.appledaily.com/index/dailyquote/", MainModel.this);
-        }
-    };
-
     @Override
-    public void setAQIDelete(int position, int is_delete) {
-        AQIDatas.remove(position);
-        MySqlite.getInstance(context).updateIsDelete(AQIDatas.get(position).getId(),1);
-        Log.d(TAG, "setAQIDelete: AQIDatas.size = " + AQIDatas.size());
+    public void setAQIDelete(int id, int is_delete) {
+        MySqlite.getInstance(context).updateIsDelete(id,1);
     }
 
     @Override
     public void setAllAQIRestore() {
         MySqlite.getInstance(context).restoreIsDelete();
-        AQIDatas = MySqlite.getInstance(context).getAllAQIDatasWithoutDelete();
-        Log.d(TAG, "setAllAQIRestore: AQIDatas.size = " + AQIDatas.size());
     }
 
 

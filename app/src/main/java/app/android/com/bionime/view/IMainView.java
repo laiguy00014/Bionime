@@ -12,5 +12,6 @@ import app.android.com.bionime.bean.DataBean;
 
 public interface IMainView {
     void setSentence(String sentence);
-    void setAQIDatas();
+    void notifyRecyclerView(List<DataBean> datas);
+    void setAQIDatas(List<DataBean> datas);
 }

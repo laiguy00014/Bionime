@@ -23,6 +23,6 @@ public class LocalClient {
     }
 
     public List<DataBean> getAQIDatas(){
-        return MySqlite.getInstance(context).getAllAQIDatasWithoutDelete();
+        return MySqlite.getInstance(context).getAllAQIDatasWithoutDelete(true);
     }
 }
