@@ -15,12 +15,12 @@ import app.android.com.bionime.view.IAQICellView;
 
 public class MainViewHolder extends RecyclerView.ViewHolder implements IAQICellView{
 
-    TextView tv_site_name, tv_country, tv_aqi, tv_pollutant, tv_status, tv_so2, tv_co
+    private TextView tv_site_name, tv_country, tv_aqi, tv_pollutant, tv_status, tv_so2, tv_co
             , tv_co_8hr, tv_o3, tv_o3_8hr, tv_pm10, tv_pm25, tv_no2, tv_nox, tv_no
             ,tv_wind_speed, tv_wind_direc, tv_publish_time, tv_pm25_avg, tv_pm10_avg
             ,tv_so2_avg, tv_longitude, tv_latitude;
 
-    Button btn_delete;
+    private Button btn_delete;
 
     public MainViewHolder(View itemView) {
         super(itemView);

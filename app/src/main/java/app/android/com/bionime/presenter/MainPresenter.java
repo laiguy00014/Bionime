@@ -72,13 +72,13 @@ public class MainPresenter implements IMainPresenter{
             public void run() {
                 iMainModel.getNetworkAQIData("http://opendata.epa.gov.tw/webapi/Data/REWIQA/?$orderby=SiteName&$skip=0&$top=1000&format=json");
             }
-        },0,30 * 60 * 1000 / 60 / 3);
+        },0,30 * 60 * 1000);
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
                 iMainModel.getNetworkSentence("https://tw.appledaily.com/index/dailyquote/");
             }
-        },0, 12 * 60 * 60 * 1000 / 3600);
+        },0, 12 * 60 * 60 * 1000);
     }
 
 }
