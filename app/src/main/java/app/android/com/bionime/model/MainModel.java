@@ -40,7 +40,7 @@ public class MainModel implements IMainModel {
 
         this.mainPresenter = mainPresenter;
         this.context = context;
-        networkClient = new NetworkClient();
+        networkClient = new NetworkClient(context);
         localClient = new LocalClient(context);
         getSentenceFromLocal();
         getAQIDataFromLocal();
@@ -111,11 +111,11 @@ public class MainModel implements IMainModel {
     }
 
     private void getAQIDataFromInternet(String url, MainModel mainModel){
-        networkClient.getAQIData(url,context);
+        networkClient.getAQIData(url);
     }
 
     private void getSentenceFromInternet(String url, MainModel mainModel) {
-        networkClient.getSentence(url, context);
+        networkClient.getSentence(url);
     }
 
     private TimerTask task1 = new TimerTask() {

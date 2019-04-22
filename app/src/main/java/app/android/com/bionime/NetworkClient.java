@@ -35,7 +35,13 @@ public class NetworkClient {
     private static final String TAG = "NetworkClient";
     private static final String BROADCAST_ACTION =
             "app.android.com.bionime.broadcast";
-    public void getAQIData(String url, Context context){
+    public Context context;
+
+    public NetworkClient(Context context){
+        this.context = context;
+    }
+
+    public void getAQIData(String url){
         String decodedString = "";
         String urlData = "";
         try {
@@ -47,13 +53,13 @@ public class NetworkClient {
             }
             reader.close();
             Log.d(TAG, "getUrlData: urlData = " + urlData);
-            formateData(urlData, context);
+            formateData(urlData);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private void formateData(String dataStr, Context context){
+    private void formateData(String dataStr){
         try {
             JSONArray jsonArray = new JSONArray(dataStr);
             ArrayList<DataBean> list = new ArrayList<>();
@@ -71,7 +77,7 @@ public class NetworkClient {
         }
     }
 
-    public void getSentence(String url, Context context) {
+    public void getSentence(String url) {
         try {
             Document doc = Jsoup.connect(url).get();
             Elements elements = doc.select("meta[name=description]");
