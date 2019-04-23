@@ -21,9 +21,9 @@ public class MainPresenter implements IMainPresenter{
     private IMainModel iMainModel;
     private IMainView iMainView;
 
-    public MainPresenter(IMainView iMainView, Context context) {
+    public MainPresenter(IMainView iMainView) {
         this.iMainView = iMainView;
-        iMainModel = new MainModel(context);
+        iMainModel = new MainModel(iMainView);
         startTimer();
     }
 

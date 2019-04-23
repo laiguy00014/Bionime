@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements IMainView{
     }
 
     private void bindData(){
-        mainPresenter = new MainPresenter(this, this);
+        mainPresenter = new MainPresenter(this);
         btn_restore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

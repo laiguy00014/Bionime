@@ -16,6 +16,7 @@ import app.android.com.bionime.NetworkClient;
 import app.android.com.bionime.bean.DataBean;
 import app.android.com.bionime.presenter.IMainPresenter;
 import app.android.com.bionime.presenter.MainPresenter;
+import app.android.com.bionime.view.IMainView;
 
 /**
  * Created by laiguanyu on 2019/4/19.
@@ -29,8 +30,8 @@ public class MainModel implements IMainModel {
     private Context context;
     private boolean isLocalAQIDataNull = false;
 
-    public MainModel(Context context){
-        this.context = context;
+    public MainModel(IMainView iMainView){
+        this.context = (Context) iMainView;
         networkClient = new NetworkClient(context);
         localClient = new LocalClient(context);
         isLocalAQIDataNull = (localClient.getAQIDatas() == null);
